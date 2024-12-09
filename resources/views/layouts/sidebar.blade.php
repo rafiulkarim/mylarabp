@@ -27,29 +27,51 @@
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
-                <li class="nav-item active">
-                    <a
-                        data-bs-toggle="collapse"
-                        href="#dashboard"
-                        class="collapsed"
-                        aria-expanded="false"
-                    >
+                <li class="nav-item {{ Request::is('home') ? 'active' : '' }}">
+                    <a href="{{ url('home') }}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
-{{--                        <span class="caret"></span>--}}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Base</p>
+                <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#user" class="{{ Request::is('user*') ? '' : 'collapsed' }}"
+                       aria-expanded="{{ Request::is('user*') ? 'true' : 'false' }}">
+                        <i class="fas fa-users"></i>
+                        <p>User</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="base">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="components/avatars.html">
-                                    <span class="sub-item">Avatars</span>
+                    <div class="collapse {{ Request::is('user*') ? 'show' : '' }}" id="user">
+                        <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                            <li class="{{ Request::is('user/create') ? 'active' : '' }}">
+                                <a href="{{ url('user/create') }}">
+                                    <span class="sub-item">Create User</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('user') ? 'active' : '' }}">
+                                <a href="{{ url('user') }}">
+                                    <span class="sub-item">Manage User</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{ Request::is('permission*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#permission" class="{{ Request::is('permission*') ? '' : 'collapsed' }}"
+                       aria-expanded="{{ Request::is('permission*') ? 'true' : 'false' }}">
+                        <i class="fas fa-universal-access"></i>
+                        <p>Permission</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ Request::is('permission*') ? 'show' : '' }}" id="permission">
+                        <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                            <li class="{{ Request::is('permission/create') ? 'active' : '' }}">
+                                <a href="{{ url('permission/create') }}">
+                                    <span class="sub-item">Create Permission</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('permission') ? 'active' : '' }}">
+                                <a href="{{ url('permission') }}">
+                                    <span class="sub-item">Manage Permission</span>
                                 </a>
                             </li>
                         </ul>

@@ -32,6 +32,8 @@
             },
         });
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
@@ -40,6 +42,7 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+    @stack('css')
 </head>
 <body>
 <div class="wrapper">
@@ -52,12 +55,7 @@
 
         <div class="container">
             <div class="page-inner">
-                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                    <div>
-                        <h3 class="fw-bold mb-3">Dashboard</h3>
-                        <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
-                    </div>
-                </div>
+                @yield('maincontent')
             </div>
         </div>
 
@@ -76,11 +74,12 @@
     </div>
 
     <!-- Custom template | don't include it in your project! -->
-    @include('layouts.theme_settings')
+{{--    @include('layouts.theme_settings')--}}
     <!-- End Custom template -->
 </div>
 <!--   Core JS Files   -->
 <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 
@@ -95,9 +94,6 @@
 
 <!-- Chart Circle -->
 <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
-
-<!-- Datatables -->
-<script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
 
 <!-- Bootstrap Notify -->
 {{--<script src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>--}}
@@ -114,7 +110,9 @@
 
 <!-- Kaiadmin DEMO methods, don't include it in your project! -->
 <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
-<script src="{{ asset('assets/js/demo.js') }}"></script>
+{{--<script src="{{ asset('assets/js/demo.js') }}"></script>--}}
+
+@stack('js')
 
 </body>
 </html>
