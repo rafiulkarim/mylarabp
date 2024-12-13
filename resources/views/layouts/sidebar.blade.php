@@ -69,9 +69,31 @@
                                     <span class="sub-item">Create Permission</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::is('permission') ? 'active' : '' }}">
+                            <li class="{{ Request::is('permission') || Request::is('permission/*/edit') ? 'active' : '' }}">
                                 <a href="{{ url('permission') }}">
                                     <span class="sub-item">Manage Permission</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{ Request::is('role*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#role" class="{{ Request::is('role*') ? '' : 'collapsed' }}"
+                       aria-expanded="{{ Request::is('role*') ? 'true' : 'false' }}">
+                        <i class="fas fa-universal-access"></i>
+                        <p>Role</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ Request::is('role*') ? 'show' : '' }}" id="role">
+                        <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                            <li class="{{ Request::is('role/create') ? 'active' : '' }}">
+                                <a href="{{ url('role/create') }}">
+                                    <span class="sub-item">Create Role</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('role') || Request::is('role/*/edit') ? 'active' : '' }}">
+                                <a href="{{ url('role') }}">
+                                    <span class="sub-item">Manage Role</span>
                                 </a>
                             </li>
                         </ul>

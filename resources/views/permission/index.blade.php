@@ -106,15 +106,61 @@
     </script>
     <script>
         $(document.body).on('click', '.delete', function () {
-            let id = $(this).attr('data')
-            swal("Good job!", "You clicked the button!", {
-                icon: "error",
+            let id = $(this).attr('data'); // Get the id from the data attribute
+            // console.log(id)
+
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this record!",
+                icon: "warning",
                 buttons: {
-                    confirm: {
-                        className: "btn btn-danger",
+                    cancel: {
+                        text: "Cancel",
+                        value: null,
+                        visible: true,
+                        className: "btn btn-secondary",
+                        closeModal: true,
                     },
-                },
+                    confirm: {
+                        text: "Delete",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-danger",
+                        closeModal: false // Keep the alert open until AJAX completes
+                    }
+                }
+            }).then((willDelete) => {
+                if (willDelete) {
+                    // Make the AJAX call here
+                    $.ajax({
+                        url: "{{ url('permission') }}/" + id,
+                        type: 'DELETE', // HTTP method
+                        data: {
+                            _token: '{{ csrf_token() }}', // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            // swal("Success!", "The record has been deleted.", "success");
+                            swal({
+                                title: "Success!",
+                                text: "The record has been deleted.",
+                                icon: "success",
+                                position: "top-end", // positions the alert at the top-right
+                                buttons: false, // hides buttons if you want it to be non-interactive
+                                timer: 1500, // auto close after 3 seconds
+                                customClass: {
+                                    popup: 'swal2-custom-position'
+                                }
+                            });
+                            // Optionally, remove the record from the UI
+                            $(`[data="${id}"]`).closest('tr').remove();
+                        },
+                        error: function(xhr) {
+                            swal("Error!", "Something went wrong while deleting the record.", "error");
+                        }
+                    });
+                }
             });
-        })
+        });
     </script>
+
 @endpush

@@ -14,7 +14,7 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $permissions = Permission::where('status', 'Active')->latest()->get();
+        $permissions = Permission::latest()->get();
         return view('permission.index', compact(['permissions']));
     }
 
@@ -33,6 +33,36 @@ class PermissionController extends Controller
         $data['success'] = 1;
         $data['message'] = 'successfully Created';
         return $data;
+
+    }
+
+    public function show()
+    {
+
+    }
+
+    public function edit($id)
+    {
+        $permission = Permission::find($id);
+        return view('permission.edit', compact(['permission']));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $permission = Permission::find($request->id);
+        $permission->title = $request->title;
+        $permission->status = $request->status;
+        $permission->save();
+
+        $data['success'] = 1;
+        $data['message'] = 'Permission successfully Updated';
+        return $data;
+    }
+
+    public function destroy($id)
+    {
+        $permission = Permission::find($id);
+        $permission->delete();
 
     }
 }
