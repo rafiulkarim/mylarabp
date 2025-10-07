@@ -3,12 +3,8 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img
-                    src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
-                    alt="navbar brand"
-                    class="navbar-brand"
-                    height="20"
-                />
+                <img src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}" alt="navbar brand" class="navbar-brand"
+                    height="20" />
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -24,21 +20,25 @@
         </div>
         <!-- End Logo Header -->
     </div>
+
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
+                <!-- Dashboard -->
                 <li class="nav-item {{ Request::is('home') ? 'active' : '' }}">
                     <a href="{{ url('home') }}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
+
+                <!-- User -->
                 <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#user" class="{{ Request::is('user*') ? '' : 'collapsed' }}"
-                       aria-expanded="{{ Request::is('user*') ? 'true' : 'false' }}">
+                        aria-expanded="{{ Request::is('user*') ? 'true' : 'false' }}">
                         <i class="fas fa-users"></i>
                         <p>User</p>
-                        <span class="caret"></span>
+                        <span class="caret {{ Request::is('user*') ? 'caret-down' : 'caret-right' }}"></span>
                     </a>
                     <div class="collapse {{ Request::is('user*') ? 'show' : '' }}" id="user">
                         <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
@@ -55,12 +55,15 @@
                         </ul>
                     </div>
                 </li>
+
+                <!-- Permission -->
                 <li class="nav-item {{ Request::is('permission*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#permission" class="{{ Request::is('permission*') ? '' : 'collapsed' }}"
-                       aria-expanded="{{ Request::is('permission*') ? 'true' : 'false' }}">
-                        <i class="fas fa-universal-access"></i>
+                    <a data-bs-toggle="collapse" href="#permission"
+                        class="{{ Request::is('permission*') ? '' : 'collapsed' }}"
+                        aria-expanded="{{ Request::is('permission*') ? 'true' : 'false' }}">
+                        <i class="fas fa-lock"></i>
                         <p>Permission</p>
-                        <span class="caret"></span>
+                        <span class="caret {{ Request::is('permission*') ? 'caret-down' : 'caret-right' }}"></span>
                     </a>
                     <div class="collapse {{ Request::is('permission*') ? 'show' : '' }}" id="permission">
                         <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
@@ -69,7 +72,8 @@
                                     <span class="sub-item">Create Permission</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::is('permission') || Request::is('permission/*/edit') ? 'active' : '' }}">
+                            <li
+                                class="{{ Request::is('permission') || Request::is('permission/*/edit') ? 'active' : '' }}">
                                 <a href="{{ url('permission') }}">
                                     <span class="sub-item">Manage Permission</span>
                                 </a>
@@ -77,12 +81,14 @@
                         </ul>
                     </div>
                 </li>
+
+                <!-- Role -->
                 <li class="nav-item {{ Request::is('role*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#role" class="{{ Request::is('role*') ? '' : 'collapsed' }}"
-                       aria-expanded="{{ Request::is('role*') ? 'true' : 'false' }}">
-                        <i class="fas fa-universal-access"></i>
+                        aria-expanded="{{ Request::is('role*') ? 'true' : 'false' }}">
+                        <i class="fas fa-key"></i>
                         <p>Role</p>
-                        <span class="caret"></span>
+                        <span class="caret {{ Request::is('role*') ? 'caret-down' : 'caret-right' }}"></span>
                     </a>
                     <div class="collapse {{ Request::is('role*') ? 'show' : '' }}" id="role">
                         <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
