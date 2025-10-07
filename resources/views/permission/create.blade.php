@@ -62,7 +62,7 @@
                     </div>
                     <div class="card-action">
                         <button class="btn btn-outline-primary"><i class="fa fa-arrow-left"></i> Back</button>
-                        <button class="btn btn-success float-end" id="saveButton">Submit <i class="fa fa-save"></i>
+                        <button class="btn btn-primary float-end" id="saveButton">Submit <i class="fa fa-save"></i>
                         </button>
                     </div>
                 </form>

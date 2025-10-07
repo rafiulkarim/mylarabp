@@ -1,10 +1,36 @@
 @extends('layouts.al305_main')
-@section('title','Permission')
+@section('title', 'Permission')
 @push('css')
-    {{--    <link rel="stylesheet" href="{{ asset('assets/js/plugin/dataTables/fixedHeader.dataTables.min.css') }}">--}}
+    {{--
+    <link rel="stylesheet" href="{{ asset('assets/js/plugin/dataTables/fixedHeader.dataTables.min.css') }}">--}}
 
     <link rel="stylesheet" href="{{ asset('assets/js/plugin/dataTables/bs4/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/js/plugin/dataTables/fixedHeader.dataTables.min.css') }}">
+    <style>
+        /* Force row height */
+        #basic-datatables tbody tr {
+            height: 30px !important;
+            line-height: 1.7 !important;
+        }
+
+        #basic-datatables tbody td {
+            padding: 2px 8px !important;
+            vertical-align: middle !important;
+        }
+
+        /* Header styling - Updated to light green */
+        #basic-datatables thead tr {
+            background-color: #dff0d8 !important;
+        }
+
+        #basic-datatables thead th {
+            background-color: #dff0d8 !important;
+            color: #3c763d !important;
+            /* Dark green text for contrast */
+            padding: 10px 8px !important;
+            border-bottom: 2px solid #d6e9c6 !important;
+        }
+    </style>
 @endpush
 @section('breadcrumb')
     <h3 class="fw-bold">Permissions</h3>
@@ -30,46 +56,46 @@
 @endsection
 
 @section('maincontent')
-    <div class="row justify-content-center">
+    {{-- <div class="row justify-content-center"> --}}
         <div class="card">
+            <div class="card-header bg-primary text-white">
+                Permission List
+            </div>
             <div class="card-body">
                 <div>
-                    <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
-                    >
+                    <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
-                        <tr>
-                            <th>S/N</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($permissions as $key => $permission)
-                            <tr>
-                                <td>{{ $key+1 }}</td>
-                                <td>{{ $permission->title }}</td>
-                                <td>{{ $permission->status }}</td>
-                                <td>
-                                    <a title="Edit" class="bg-primary p-1"
-                                       href="{{ url('permission/'. $permission->id. '/edit') }}"><i
-                                            class="fa fa-edit text-white"></i></a>
-                                    <button type="button" data="{{ $permission->id }}" title="Delete"
-                                            class="btn btn-link btn-danger delete">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($permissions as $key => $permission)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $permission->title }}</td>
+                                    <td>{{ $permission->status }}</td>
+                                    <td>
+                                        <a title="Edit" class="bg-primary p-1"
+                                            href="{{ url('permission/' . $permission->id . '/edit') }}"><i
+                                                class="fa fa-edit text-white"></i></a>
+                                        <button type="button" data="{{ $permission->id }}" title="Delete"
+                                            class="bg-danger px-1 py-0  border-0 delete">
+                                            <i class="fa fa-trash text-white"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
 @endsection
 @push('js')
     <!-- Datatables -->
@@ -82,27 +108,67 @@
                 pageLength: 25,
                 responsive: true,
                 fixedHeader: true,
-//            dom: '<"html5buttons"B>lTfgtip',
-                'dom': "<'row'<'col-sm-12 col-md-3'l><'col-sm-12 col-md-6'B><'col-sm-12 col-md-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                dom: "<'row'<'col-sm-12 col-md-12 text-center'B>><'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
 
                 buttons: [
-                    {extend: 'copy'},
-                    {extend: 'csv'},
-                    {extend: 'excel', title: 'User List'},
-                    {extend: 'pdf', title: 'User List'},
+                    {
+                        extend: 'copy',
+                        text: '<i class="fas fa-copy"></i>',
+                        titleAttr: 'Copy to clipboard',
+                        className: 'btn-sm btn-secondary',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        text: '<i class="fas fa-file-csv"></i>',
+                        titleAttr: 'Export to CSV',
+                        className: 'btn-sm btn-info',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        text: '<i class="fas fa-file-excel"></i>',
+                        titleAttr: 'Export to Excel',
+                        className: 'btn-sm btn-success',
+                        title: 'Permission List',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="fas fa-file-pdf"></i>',
+                        titleAttr: 'Export to PDF',
+                        className: 'btn-sm btn-danger',
+                        title: 'Permission List',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
                     {
                         extend: 'print',
+                        text: '<i class="fas fa-print"></i>',
+                        titleAttr: 'Print table',
+                        className: 'btn-sm btn-warning',
                         customize: function (win) {
                             $(win.document.body).addClass('white-bg');
                             $(win.document.body).css('font-size', '10px');
                             $(win.document.body).find('table')
                                 .addClass('compact')
                                 .css('font-size', 'inherit');
+                        },
+                        exportOptions: {
+                            columns: ':visible'
                         }
                     }
                 ]
             });
         });
+
     </script>
     <script>
         $(document.body).on('click', '.delete', function () {
@@ -138,7 +204,7 @@
                         data: {
                             _token: '{{ csrf_token() }}', // Include CSRF token for security
                         },
-                        success: function(response) {
+                        success: function (response) {
                             // swal("Success!", "The record has been deleted.", "success");
                             swal({
                                 title: "Success!",
@@ -154,7 +220,7 @@
                             // Optionally, remove the record from the UI
                             $(`[data="${id}"]`).closest('tr').remove();
                         },
-                        error: function(xhr) {
+                        error: function (xhr) {
                             swal("Error!", "Something went wrong while deleting the record.", "error");
                         }
                     });

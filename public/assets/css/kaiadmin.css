@@ -779,9 +779,10 @@ body {
     top: 0; }
   .sidebar .nav-collapse, .sidebar[data-background-color="white"] .nav-collapse {
     margin-top: 0px;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px;
     padding-bottom: 15px;
-    padding-top: 10px; }
+    padding-top: 10px;  */
+  }
     .sidebar .nav-collapse li.active > a, .sidebar[data-background-color="white"] .nav-collapse li.active > a {
       font-weight: 600; }
     .sidebar .nav-collapse li a:before, .sidebar .nav-collapse li a:hover:before, .sidebar[data-background-color="white"] .nav-collapse li a:before, .sidebar[data-background-color="white"] .nav-collapse li a:hover:before {
