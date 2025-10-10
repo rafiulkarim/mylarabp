@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
+    return view('login');
+})->name('login');
+Route::post('signin', [\App\Http\Controllers\RegistrationController::class, 'signin']);
+Route::post('logout', [\App\Http\Controllers\RegistrationController::class, 'logout'])->name('logout');
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::resource('user', \App\Http\Controllers\UserController::class);
 Route::resource('permission', \App\Http\Controllers\PermissionController::class);
 Route::resource('role', \App\Http\Controllers\RoleController::class);
+Route::resource('user-type', \App\Http\Controllers\UserTypeController::class);

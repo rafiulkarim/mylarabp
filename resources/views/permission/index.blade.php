@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('assets/js/plugin/dataTables/fixedHeader.dataTables.min.css') }}">
     <style>
         /* Force row height */
-        #basic-datatables tbody tr {
+        /* #basic-datatables tbody tr {
             height: 30px !important;
             line-height: 1.7 !important;
         }
@@ -16,7 +16,7 @@
         #basic-datatables tbody td {
             padding: 2px 8px !important;
             vertical-align: middle !important;
-        }
+        } */
 
         /* Header styling - Updated to light green */
         #basic-datatables thead tr {
