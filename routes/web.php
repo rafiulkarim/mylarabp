@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-})->name('login');
+Route::get('/', [\App\Http\Controllers\RegistrationController::class, 'login'])->name('login');
 Route::post('signin', [\App\Http\Controllers\RegistrationController::class, 'signin']);
 Route::post('logout', [\App\Http\Controllers\RegistrationController::class, 'logout'])->name('logout');
 // Auth::routes();
+Route::get('/error', [\App\Http\Controllers\HomeController::class, 'error']);
+Route::fallback([\App\Http\Controllers\HomeController::class, 'fallback']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('user', \App\Http\Controllers\UserController::class);

@@ -24,12 +24,12 @@
         <li class="nav-item">
             <a href="{{ url('permission') }}">Permissions</a>
         </li>
-        {{--        <li class="separator">--}}
-        {{--            <i class="fas fa-angle-right"></i>--}}
-        {{--        </li>--}}
-        {{--        <li class="nav-item">--}}
-        {{--            <a href="{{ url('permission/create') }}">Create Permission</a>--}}
-        {{--        </li>--}}
+        <li class="separator">
+            <i class="fas fa-angle-right"></i>
+        </li>
+        <li class="nav-item">
+            <a href="#">Update Permission</a>
+        </li>
     </ul>
 @endsection
 

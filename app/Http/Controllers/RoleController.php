@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -16,6 +17,7 @@ class RoleController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('role-access'), redirect('error'));
         $roles = Role::with('permissions')->get();
         // print_r($roles); die();
         return view('role.index', compact(['roles']));

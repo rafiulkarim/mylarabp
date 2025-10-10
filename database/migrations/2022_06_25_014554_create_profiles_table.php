@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('contact_no2')->nullable();
             $table->enum('gender',['Male','Female','Others'])->nullable()->default('Male');
             $table->text('address')->nullable();
+            $table->text('address2')->nullable();
             $table->timestamps();
         });
     }

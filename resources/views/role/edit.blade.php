@@ -19,12 +19,12 @@
         <li class="nav-item">
             <a href="{{ url('role') }}">Roles</a>
         </li>
-        {{-- <li class="separator">
+        <li class="separator">
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="{{ url('role/create') }}">Update Role</a>
-        </li> --}}
+            <a href="#">Update Role</a>
+        </li>
     </ul>
 @endsection
 

@@ -17,13 +17,13 @@
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="{{ url('role') }}">Roles</a>
+            <a href="{{ url('user-type') }}">User Type</a>
         </li>
         <li class="separator">
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="{{ url('role/create') }}">Create Role</a>
+            <a href="#">Create User Type</a>
         </li>
     </ul>
 @endsection
@@ -33,22 +33,23 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <div class="card-title text-white" style="font-size: 13px">Create Role</div>
+                    <div class="card-title text-white" style="font-size: 13px">Create User Type</div>
                 </div>
-                <form action="{{ route('role.store') }}" method="POST" id="formSubmit">
+                <form action="{{ route('user-type.store') }}" method="POST" id="formSubmit">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="email2">Role Title <span class="text-danger">*</span></label>
+                            <label for="email2">User Type Title <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="title" name="title" required
                                 placeholder="Enter Title">
                             <small id="titleError" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="email2">Select Permissions <span class="text-danger">*</span></label>
-                            <select class="form-select select2" id="permissions" name="permissions[]" multiple="multiple">
-                                @foreach ($permissions as $permission)
-                                    <option value="{{ $permission->id }}">{{ $permission->title }}</option>
+                            <label for="email2">Select Role <span class="text-danger">*</span></label>
+                            <select class="form-select select2" id="roles" name="roles[]" multiple="multiple">
+                                <option value="">Select Role</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->title }}</option>
                                 @endforeach
                             </select>
                             <small id="permissionsError" class="form-text text-danger"></small>
@@ -75,8 +76,10 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <button type="button" class="btn btn-outline-primary" onclick="window.history.back()"><i class="fa fa-arrow-left"></i> Back</button>
-                        <button type="submit" class="btn btn-primary float-end" id="saveButton">Submit <i class="fa fa-save"></i>
+                        <button type="button" class="btn btn-outline-primary" onclick="window.history.back()"><i
+                                class="fa fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn btn-primary float-end" id="saveButton">Submit <i
+                                class="fa fa-save"></i>
                         </button>
                     </div>
                 </form>
@@ -113,7 +116,7 @@
                     'permissions[]': "Please select at least one permission",
                     status: "Please select a status",
                 },
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     // Custom error placement for specific fields
                     if (element.attr("name") == "title") {
                         error.appendTo("#titleError");
@@ -127,24 +130,24 @@
                 },
                 submitHandler: function (form) {
                     var formData = new FormData(form);
-                    
+
                     // Convert select2 multiple selections to array
                     var permissions = $('#permissions').val();
                     if (permissions) {
                         formData.set('permissions', JSON.stringify(permissions));
                     }
-                    
+
                     $('#saveButton').prop("disabled", true);
-                    
+
                     // Clear previous errors
                     $('.text-danger').text('');
-                    
+
                     $.ajax({
                         type: "POST",
                         data: formData,
                         processData: false,
                         contentType: false,
-                        url: "{{ route('role.store') }}",
+                        url: "{{ route('user-type.store') }}",
                         success: function (res) {
                             if (res.success) {
                                 swal({
@@ -160,7 +163,7 @@
                                 });
 
                                 setTimeout(() => {
-                                    window.location.href = "{{ url('/role') }}";
+                                    window.location.href = "{{ url('/user-type') }}";
                                 }, 1000);
                             } else {
                                 $('#saveButton').prop("disabled", false);
@@ -168,7 +171,7 @@
                         },
                         error: function (xhr) {
                             $('#saveButton').prop("disabled", false);
-                            
+
                             if (xhr.status === 422) {
                                 // Validation errors
                                 var errors = xhr.responseJSON.errors;

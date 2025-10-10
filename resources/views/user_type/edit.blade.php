@@ -1,12 +1,12 @@
 @extends('layouts.al305_main')
-@section('title', 'Create Role')
+@section('title', 'Update User Type')
 @push('css')
     <link rel="stylesheet"
         href="{{ asset('alte305/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 @endpush
 @section('breadcrumb')
-    <h3 class="fw-bold">Roles</h3>
+    <h3 class="fw-bold">User Type</h3>
     <ul class="breadcrumbs">
         <li class="nav-home">
             <a href="{{ url('/home') }}">
@@ -17,13 +17,13 @@
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="{{ url('role') }}">Roles</a>
+            <a href="{{ url('user-type') }}">User Types</a>
         </li>
         <li class="separator">
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="#">Create Role</a>
+            <a href="#">Update User Type</a>
         </li>
     </ul>
 @endsection
@@ -33,22 +33,25 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <div class="card-title text-white" style="font-size: 13px">Create Role</div>
+                    <div class="card-title text-white" style="font-size: 13px">Update User Type</div>
                 </div>
-                <form action="{{ route('role.store') }}" method="POST" id="formSubmit">
+                <form id="formSubmit">
                     @csrf
+                    <input type="hidden" value="{{ $userType->id }}" name="id" id="user-type-id" >
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="email2">Role Title <span class="text-danger">*</span></label>
+                            <label for="email2">User Type Title <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="title" name="title" required
-                                placeholder="Enter Title">
+                                value="{{ $userType->title }}" placeholder="Enter Title">
                             <small id="titleError" class="form-text text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="email2">Select Permissions <span class="text-danger">*</span></label>
-                            <select class="form-select select2" id="permissions" name="permissions[]" multiple="multiple">
-                                @foreach ($permissions as $permission)
-                                    <option value="{{ $permission->id }}">{{ $permission->title }}</option>
+                            <label for="email2">Select Roles <span class="text-danger">*</span></label>
+                            <select class="form-select select2" id="roles" name="roles[]" multiple="multiple">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}"
+                                        {{ in_array( $role->id, $roleData) ? 'selected' : '' }}
+                                        >{{ $role->title }}</option>
                                 @endforeach
                             </select>
                             <small id="permissionsError" class="form-text text-danger"></small>
@@ -58,13 +61,14 @@
                             <div class="d-flex">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="status" value="Active" id="active"
-                                        checked>
+                                        {{ $userType->status == "Active" ? 'checked' : '' }}>
                                     <label class="form-check-label" for="active">
                                         Active
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="status" value="Inactive"
+                                    {{ $userType->status == "Inactive" ? 'checked' : '' }}
                                         id="inactive">
                                     <label class="form-check-label" for="inactive">
                                         Inactive
@@ -75,8 +79,10 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <button type="button" class="btn btn-outline-primary" onclick="window.history.back()"><i class="fa fa-arrow-left"></i> Back</button>
-                        <button type="submit" class="btn btn-primary float-end" id="saveButton">Submit <i class="fa fa-save"></i>
+                        <button type="button" class="btn btn-outline-primary" onclick="window.history.back()"><i
+                                class="fa fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn btn-primary float-end" id="saveButton">Submit <i
+                                class="fa fa-save"></i>
                         </button>
                     </div>
                 </form>
@@ -126,71 +132,40 @@
                     }
                 },
                 submitHandler: function (form) {
-                    var formData = new FormData(form);
-                    
-                    // Convert select2 multiple selections to array
-                    var permissions = $('#permissions').val();
-                    if (permissions) {
-                        formData.set('permissions', JSON.stringify(permissions));
-                    }
-                    
-                    $('#saveButton').prop("disabled", true);
-                    
-                    // Clear previous errors
-                    $('.text-danger').text('');
-                    
-                    $.ajax({
-                        type: "POST",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        url: "{{ route('role.store') }}",
-                        success: function (res) {
-                            if (res.success) {
-                                swal({
-                                    title: "Success!",
-                                    text: res.message,
-                                    icon: "success",
-                                    position: "top-end",
-                                    buttons: false,
-                                    timer: 3000,
-                                    customClass: {
-                                        popup: 'swal2-custom-position'
-                                    }
-                                });
+                    var id = $('#user-type-id').val()
+                    var data = $('#formSubmit').serialize();
+                    console.log(data)
+                    // console.log(id)
+                    if ($("#formSubmit").valid()) {
+                        $('#saveButton').prop("disabled", true);
+                        //Calling Ajax
+                        $.ajax({
+                            type: "PUT",
+                            data: data,
+                            url: "{{ url('user-type/update') }}",
+                            success: function (res) {
+                                if (parseInt(res.success) == 1) {
+                                    swal({
+                                        title: "Success!",
+                                        text: res.message,
+                                        icon: "success",
+                                        position: "top-end", // positions the alert at the top-right
+                                        buttons: false, // hides buttons if you want it to be non-interactive
+                                        timer: 3000, // auto close after 3 seconds
+                                        customClass: {
+                                            popup: 'swal2-custom-position'
+                                        }
+                                    });
 
-                                setTimeout(() => {
-                                    window.location.href = "{{ url('/role') }}";
-                                }, 1000);
-                            } else {
-                                $('#saveButton').prop("disabled", false);
+                                    setTimeout(() => {
+                                        window.location.href = "{{ url('/user-type') }}";
+                                    }, 1000);
+                                } else {
+                                    $('#submit').prop("disabled", false);
+                                }
                             }
-                        },
-                        error: function (xhr) {
-                            $('#saveButton').prop("disabled", false);
-                            
-                            if (xhr.status === 422) {
-                                // Validation errors
-                                var errors = xhr.responseJSON.errors;
-                                $.each(errors, function (key, value) {
-                                    if (key === 'title') {
-                                        $('#titleError').text(value[0]);
-                                    } else if (key === 'permissions' || key === 'permissions[]') {
-                                        $('#permissionsError').text(value[0]);
-                                    } else if (key === 'status') {
-                                        $('#statusError').text(value[0]);
-                                    }
-                                });
-                            } else {
-                                // Other errors
-                                swal({
-                                    title: "Error!",
-                                    text: "Something went wrong!",
-                                    icon: "error",
-                                });
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         });

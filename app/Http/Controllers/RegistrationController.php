@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
+    public function login()
+    {
+        return view('login');
+    }
     public function signin(Request $request)
     {
         // print_r($request->all()); die();

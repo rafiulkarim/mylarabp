@@ -33,28 +33,33 @@
                 </li>
 
                 <!-- User -->
-                <li class="nav-item {{ Request::is('user*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#user" class="{{ Request::is('user*') ? '' : 'collapsed' }}"
-                        aria-expanded="{{ Request::is('user*') ? 'true' : 'false' }}">
-                        <i class="fas fa-users"></i>
-                        <p>User</p>
-                        <span class="caret {{ Request::is('user*') ? 'caret-down' : 'caret-right' }}"></span>
-                    </a>
-                    <div class="collapse {{ Request::is('user*') ? 'show' : '' }}" id="user">
-                        <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
-                            <li class="{{ Request::is('user/create') ? 'active' : '' }}">
-                                <a href="{{ url('user/create') }}">
-                                    <span class="sub-item">Create User</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('user') ? 'active' : '' }}">
-                                <a href="{{ url('user') }}">
-                                    <span class="sub-item">Manage User</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @can('user-access')
+                    <li class="nav-item {{ Request::is('user*') && !Request::is('user-type*') ? 'active' : '' }}">
+                        <a data-bs-toggle="collapse" href="#user"
+                            class="{{ Request::is('user*') && !Request::is('user-type*') ? '' : 'collapsed' }}"
+                            aria-expanded="{{ Request::is('user*') && !Request::is('user-type*') ? 'true' : 'false' }}">
+                            <i class="fas fa-users"></i>
+                            <p>User</p>
+                            <span
+                                class="caret {{ Request::is('user*') && !Request::is('user-type*') ? 'caret-down' : 'caret-right' }}"></span>
+                        </a>
+                        <div class="collapse {{ Request::is('user*') && !Request::is('user-type*') ? 'show' : '' }}"
+                            id="user">
+                            <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                                <li class="{{ Request::is('user/create') ? 'active' : '' }}">
+                                    <a href="{{ url('user/create') }}">
+                                        <span class="sub-item">Create User</span>
+                                    </a>
+                                </li>
+                                <li class="{{ Request::is('user') || Request::is('user/*/edit') ? 'active' : '' }}">
+                                    <a href="{{ url('user') }}">
+                                        <span class="sub-item">Manage User</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
 
                 <!-- Permission -->
                 <li class="nav-item {{ Request::is('permission*') ? 'active' : '' }}">
@@ -83,23 +88,51 @@
                 </li>
 
                 <!-- Role -->
-                <li class="nav-item {{ Request::is('role*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#role" class="{{ Request::is('role*') ? '' : 'collapsed' }}"
-                        aria-expanded="{{ Request::is('role*') ? 'true' : 'false' }}">
-                        <i class="fas fa-key"></i>
-                        <p>Role</p>
-                        <span class="caret {{ Request::is('role*') ? 'caret-down' : 'caret-right' }}"></span>
+                @can('role-access')
+                    <li class="nav-item {{ Request::is('role*') ? 'active' : '' }}">
+                        <a data-bs-toggle="collapse" href="#role" class="{{ Request::is('role*') ? '' : 'collapsed' }}"
+                            aria-expanded="{{ Request::is('role*') ? 'true' : 'false' }}">
+                            <i class="fas fa-key"></i>
+                            <p>Role</p>
+                            <span class="caret {{ Request::is('role*') ? 'caret-down' : 'caret-right' }}"></span>
+                        </a>
+                        <div class="collapse {{ Request::is('role*') ? 'show' : '' }}" id="role">
+                            <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                                <li class="{{ Request::is('role/create') ? 'active' : '' }}">
+                                    <a href="{{ url('role/create') }}">
+                                        <span class="sub-item">Create Role</span>
+                                    </a>
+                                </li>
+                                <li class="{{ Request::is('role') || Request::is('role/*/edit') ? 'active' : '' }}">
+                                    <a href="{{ url('role') }}">
+                                        <span class="sub-item">Manage Role</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+
+                <!-- User Type -->
+                <li class="nav-item {{ Request::is('user-type*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#uTypes"
+                        class="{{ Request::is('user-type*') ? '' : 'collapsed' }}"
+                        aria-expanded="{{ Request::is('user-type*') ? 'true' : 'false' }}">
+                        <i class="fas fa-user-cog"></i>
+                        <p>User Type</p>
+                        <span class="caret {{ Request::is('user-type*') ? 'caret-down' : 'caret-right' }}"></span>
                     </a>
-                    <div class="collapse {{ Request::is('role*') ? 'show' : '' }}" id="role">
+                    <div class="collapse {{ Request::is('user-type*') ? 'show' : '' }}" id="uTypes">
                         <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
-                            <li class="{{ Request::is('role/create') ? 'active' : '' }}">
-                                <a href="{{ url('role/create') }}">
-                                    <span class="sub-item">Create Role</span>
+                            <li class="{{ Request::is('user-type/create') ? 'active' : '' }}">
+                                <a href="{{ url('user-type/create') }}">
+                                    <span class="sub-item">Create User Type</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::is('role') || Request::is('role/*/edit') ? 'active' : '' }}">
-                                <a href="{{ url('role') }}">
-                                    <span class="sub-item">Manage Role</span>
+                            <li
+                                class="{{ Request::is('user-type') || Request::is('user-type/*/edit') ? 'active' : '' }}">
+                                <a href="{{ url('user-type') }}">
+                                    <span class="sub-item">Manage User Type</span>
                                 </a>
                             </li>
                         </ul>

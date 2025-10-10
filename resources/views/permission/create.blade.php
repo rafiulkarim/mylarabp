@@ -20,7 +20,7 @@
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="{{ url('permission/create') }}">Create Permission</a>
+            <a href="#">Create Permission</a>
         </li>
     </ul>
 @endsection
