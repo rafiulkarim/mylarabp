@@ -53,4 +53,13 @@ class HomeController extends Controller
     {
         return view('dashboard.admin');
     }
+
+    public function clear_all()
+    {
+        $exitCode = Artisan::call('config:clear');
+        $exitCode = Artisan::call('cache:clear');
+        $exitCode = Artisan::call('view:clear');
+        $exitCode = Artisan::call('route:clear');
+        echo '<script>alert("Config, Cache, View & Route clear Success")</script>';
+    }
 }

@@ -23,7 +23,7 @@
             <i class="fas fa-angle-right"></i>
         </li>
         <li class="nav-item">
-            <a href="#">Create Role</a>
+            <a href="{{ url('role/create') }}">Create Role</a>
         </li>
     </ul>
 @endsection

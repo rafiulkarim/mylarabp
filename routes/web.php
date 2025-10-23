@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/clear_all', [\App\Http\Controllers\HomeController::class, 'clear_all']);
 
 Route::get('/', [\App\Http\Controllers\RegistrationController::class, 'login'])->name('login');
 Route::post('signin', [\App\Http\Controllers\RegistrationController::class, 'signin']);
