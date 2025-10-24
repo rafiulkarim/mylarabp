@@ -51,7 +51,7 @@
                                         <span class="sub-item">Create User</span>
                                     </a>
                                 </li>
-                                <li class="{{ Request::is('user') || Request::is('user/*/edit') ? 'active' : '' }}">
+                                <li class="{{ Request::is('user') || Request::is('user/*/edit') || Request::is('user/*') ? 'active' : '' }}">
                                     <a href="{{ url('user') }}">
                                         <span class="sub-item">Manage User</span>
                                     </a>

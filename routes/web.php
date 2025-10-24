@@ -28,3 +28,4 @@ Route::get('my-profile', [\App\Http\Controllers\UserController::class, 'my_profi
 Route::resource('permission', \App\Http\Controllers\PermissionController::class);
 Route::resource('role', \App\Http\Controllers\RoleController::class);
 Route::resource('user-type', \App\Http\Controllers\UserTypeController::class);
+Route::post('profile', [\App\Http\Controllers\ProfileController::class, 'update_profile']);

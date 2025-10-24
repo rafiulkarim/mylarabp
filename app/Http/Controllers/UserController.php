@@ -114,4 +114,10 @@ class UserController extends Controller
         $user = User::with(['profile', 'user_type', 'roles.permissions'])->findOrFail(Auth::id());
         return view('users.show', compact('user'));
     }
+
+    public function edit($id)
+    {
+        $user = User::with(['profile', 'user_type'])->findOrFail($id);
+        return view('users.edit', compact('user'));
+    }
 }
