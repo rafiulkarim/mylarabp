@@ -24,6 +24,7 @@ Route::fallback([\App\Http\Controllers\HomeController::class, 'fallback']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('user', \App\Http\Controllers\UserController::class);
+Route::get('my-profile', [\App\Http\Controllers\UserController::class, 'my_profile']);
 Route::resource('permission', \App\Http\Controllers\PermissionController::class);
 Route::resource('role', \App\Http\Controllers\RoleController::class);
 Route::resource('user-type', \App\Http\Controllers\UserTypeController::class);

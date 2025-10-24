@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,8 +20,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::with('user_type')->get();
-        return view('user.index', compact(['users']));
+        $users = User::with('user_type')->where('id', '!=', Auth::id())->get();
+        return view('users.index', compact(['users']));
     }
 
     public function create()
@@ -100,5 +101,17 @@ class UserController extends Controller
                 'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
+    }
+
+    public function show($id)
+    {
+        $user = User::with(['profile', 'user_type', 'roles.permissions'])->findOrFail($id);
+        return view('users.show', compact('user'));
+    }
+
+    public function my_profile()
+    {
+        $user = User::with(['profile', 'user_type', 'roles.permissions'])->findOrFail(Auth::id());
+        return view('users.show', compact('user'));
     }
 }

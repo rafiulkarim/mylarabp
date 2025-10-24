@@ -1,5 +1,5 @@
 @extends('layouts.al305_main')
-@section('title', 'UserS')
+@section('title', 'Users')
 @push('css')
     {{--
     <link rel="stylesheet" href="{{ asset('assets/js/plugin/dataTables/fixedHeader.dataTables.min.css') }}">--}}
@@ -9,14 +9,14 @@
     <style>
         /* Force row height */
         /* #basic-datatables tbody tr {
-            height: 30px !important;
-            line-height: 1.7 !important;
-        }
+                height: 30px !important;
+                line-height: 1.7 !important;
+            }
 
-        #basic-datatables tbody td {
-            padding: 2px 8px !important;
-            vertical-align: middle !important;
-        } */
+            #basic-datatables tbody td {
+                padding: 2px 8px !important;
+                vertical-align: middle !important;
+            } */
 
         /* Header styling - Updated to light green */
         #basic-datatables thead tr {
@@ -71,6 +71,7 @@
                                 <th>Email</th>
                                 <th>Phone No</th>
                                 <th>User Type</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -83,12 +84,15 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->cell_phone }}</td>
                                     <td>
-                                        @foreach ($user->user_type as $user_type)
-                                            <span class="badge badge-primary">{{ $user_type->title }}</span>
-                                        @endforeach
+                                        <span class="badge badge-primary">
+                                            {{ isset($user->user_type) ? $user->user_type->title : '' }}
+                                        </span>
                                     </td>
-                                    <td>{{ $userType->status }}</td>
+                                    <td>{{ $user->status }}</td>
                                     <td>
+                                        <a title="Edit" class="bg-success p-1"
+                                            href="{{ url('user/' . $user->id) }}"><i
+                                                class="fa fa-eye text-white"></i></a>
                                         <a title="Edit" class="bg-primary p-1"
                                             href="{{ url('user/' . $user->id . '/edit') }}"><i
                                                 class="fa fa-edit text-white"></i></a>

@@ -38,13 +38,13 @@
                     >
                         <div class="avatar-sm">
                             <img
-                                src="assets/img/profile.jpg"
+                                src="{{ asset('assets/img/profile.jpg') }}"
                                 alt="..."
                                 class="avatar-img rounded-circle"
                             />
                         </div>
                         <span class="profile-username">
-                          <span class="fw-bold">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
+                          <span class="fw-bold">{{ \Illuminate\Support\Facades\Auth::user()->name ?? 'N/A' }}</span>
                         </span>
                     </a>
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -59,10 +59,10 @@
                                         />
                                     </div>
                                     <div class="u-text">
-                                        <h4>Hizrian</h4>
-                                        <p class="text-muted">hello@example.com</p>
+                                        <h4>{{ Auth::user()->name }}</h4>
+                                        <p class="text-muted">{{ Auth::user()->email ?? Auth::user()->cell_phone }}</p>
                                         <a
-                                            href="profile.html"
+                                            href="{{  url('my-profile') }}"
                                             class="btn btn-xs btn-secondary btn-sm"
                                         >My Profile</a
                                         >
