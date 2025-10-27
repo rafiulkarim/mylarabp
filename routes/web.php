@@ -30,3 +30,4 @@ Route::resource('role', \App\Http\Controllers\RoleController::class);
 Route::resource('user-type', \App\Http\Controllers\UserTypeController::class);
 Route::post('profile', [\App\Http\Controllers\ProfileController::class, 'update_profile']);
 Route::post('profile_image', [\App\Http\Controllers\ProfileController::class, 'profile_image']);
+Route::post('profile-settings', [\App\Http\Controllers\ProfileController::class, 'profile_settings']);

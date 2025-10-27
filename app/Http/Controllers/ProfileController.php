@@ -73,4 +73,22 @@ class ProfileController extends Controller
         \Session::flash('flash_message', 'Profile Image Successfully Updated');
         return redirect('user/' . $request->profile_image_id);
     }
+
+    public function profile_settings(Request $request)
+    {
+        $user = User::find($request->user_id);
+        // print_r($request->all()); 
+        if($request->password != null){
+            $password = bcrypt($request->password);
+        }else{
+            $password = $user->password;
+        }
+        $user->user_type_id = $request->user_type;
+        $user->password = $password;
+        $user->web_access = $request->web_access;
+        $user->save();
+
+        \Session::flash('flash_message', 'Profile Settings Successfully Updated');
+        return redirect('user/' . $request->user_id);
+    }
 }

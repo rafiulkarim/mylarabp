@@ -338,59 +338,126 @@
                         <div class="tab-pane fade" id="roleAndAccess" role="tabpanel" aria-labelledby="line-profile-tab">
                             <div class="card-body">
                                 <form action="{{ url('profile_image') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" value="{{ $user->id }}" name="profile_image_id">
-                                        <div class="form-group">
-                                            <h3>Profile Picture</h3>
-                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                <div class="fileinput-new thumbnail"
-                                                     style="width: 200px; height: 150px;">
-                                                    @if ($user->imageprofile->image != 'default_image.png')
-                                                        <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
-                                                            src="{{ asset('storage/images/' . $user->imageprofile->image) }}" alt="profile">
-                                                    @elseif($user->profile->gender == "Male")
-                                                        <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
-                                                            src="{{ asset('storage/images/default_image_male.png') }}" alt="profile">
-                                                    @elseif($user->profile->gender == "Female")
-                                                        <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
-                                                            src="{{ asset('storage/images/default_image_female.png') }}" alt="profile">
-                                                    @endif
-                                                </div>
-                                                <div class="fileinput-preview fileinput-exists thumbnail"
-                                                     style="max-width: 200px; max-height: 200px;"></div>
-                                                <div>
-                                                <span class="btn btn-default btn-file">
-                                                    <span class="fileinput-new"> Select Avatar </span>
-                                                    <span class="fileinput-exists"> Change </span>
-                                                    <input type="file" name="profile_image" accept="image/*">
-                                                </span>
-                                                    <a href="javascript:;" class="btn btn-default fileinput-exists"
-                                                       data-dismiss="fileinput"> Remove </a>
-                                                </div>
+                                 @csrf
+                                    <input type="hidden" value="{{ $user->id }}" name="profile_image_id">
+                                    <div class="form-group">
+                                        <h3>Profile Picture</h3>
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail"
+                                                    style="width: 200px; height: 150px;">
+                                                @if ($user->imageprofile->image != 'default_image.png')
+                                                    <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                                        src="{{ asset('storage/images/' . $user->imageprofile->image) }}" alt="profile">
+                                                @elseif($user->profile->gender == "Male")
+                                                    <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                                        src="{{ asset('storage/images/default_image_male.png') }}" alt="profile">
+                                                @elseif($user->profile->gender == "Female")
+                                                    <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                                        src="{{ asset('storage/images/default_image_female.png') }}" alt="profile">
+                                                @endif
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail"
+                                                    style="max-width: 200px; max-height: 200px;"></div>
+                                            <div>
+                                            <span class="btn btn-default btn-file">
+                                                <span class="fileinput-new"> Select Avatar </span>
+                                                <span class="fileinput-exists"> Change </span>
+                                                <input type="file" name="profile_image" accept="image/*">
+                                            </span>
+                                                <a href="javascript:;" class="btn btn-default fileinput-exists"
+                                                    data-dismiss="fileinput"> Remove </a>
                                             </div>
                                         </div>
-                                        <hr/>
-                                        <div class="row">
-                                            <div class="callout callout-warning">
-                                                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-                                                <p>
-                                                    <span style="font-size: 12px"> Prefered image size for Avatar is 300X300 & not more then 1MB. Supported image type should be jpeg, jpj, png and bmp. Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
-                                                </p>
-                                            </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="callout callout-warning">
+                                            <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+                                            <p>
+                                                <span style="font-size: 12px"> Prefered image size for Avatar is 300X300 & not more then 1MB. Supported image type should be jpeg, jpj, png and bmp. Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
+                                            </p>
                                         </div>
-                                <div class="card-action">
-                                    <button type="button" class="btn btn-danger" onclick="window.history.back()">
-                                        <i class="fa fa-arrow-left"></i> Cancel
-                                    </button>
-                                    <button type="submit" class="btn btn-success float-end" id="saveButton">
-                                        Update <i class="fa fa-save"></i>
-                                    </button>
-                                </div>
+                                    </div>
+                                    <div class="card-action">
+                                        <button type="button" class="btn btn-danger" onclick="window.history.back()">
+                                            <i class="fa fa-arrow-left"></i> Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-success float-end" id="saveButton">
+                                            Update <i class="fa fa-save"></i>
+                                        </button>
                                     </div>
                                 </form>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="line-profile-tab">
-
+                            <div class="card-body">
+                                <form action="{{ url('profile-settings') }}" method="POST" enctype="multipart/form-data">
+                                 @csrf
+                                    <input type="hidden" value="{{ $user->id }}" name="user_id">
+                                    <div class="form-group row">
+                                        <label for="password" style="text-align: right" class="col-md-3 required-field"><strong>Passwrod</strong> :</label>
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                <input type="password" name="password" id="password" class="form-control form-control-sm"
+                                                    placeholder="Enter Passwrod" >
+                                            </div>
+                                            <small id="passwordError" class="form-text text-danger"></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="confirm_password" style="text-align: right" class="col-md-3 required-field"><strong>Confirm Passwrod</strong> :</label>
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-sm"
+                                                    placeholder="Enter Confirm Passwrod" >
+                                            </div>
+                                            <small id="confirm_password_error" class="form-text text-danger"></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="confirm_password" style="text-align: right" class="col-md-3 required-field"><strong>User Type</strong> :</label>
+                                        <div class="col-md-7">
+                                        <select class="form-select select2" name="user_type" id="user_type" 
+                                        style="width: 100%" required>
+                                            <option value="">Select User Type</option>
+                                            @foreach ($userTypes as $userType)
+                                                <option value="{{ $userType->id }}"
+                                                    @if ($user->user_type_id == $userType->id)
+                                                    selected
+                                                    @endif>{{ $userType->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        <small id="userTypeError" class="form-text text-danger"></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="web_access" style="text-align: right" class="col-md-3 required-field"><strong>Web Access</strong> :</label>
+                                        <div class="col-md-7">
+                                        <div class="d-flex">
+                                            <div class="form-check me-3">
+                                                <input class="form-check-input" type="radio" name="web_access" value="1"
+                                                    id="web_access_yes" {{ $user->web_access == 1 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="web_access_yes">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="web_access" value="0" {{ $user->web_access == 0 ? 'checked' : '' }}
+                                                    id="web_access_no">
+                                                <label class="form-check-label" for="web_access_no">No</label>
+                                            </div>
+                                        </div>
+                                        <small id="webAccessError" class="form-text text-danger"></small>
+                                        </div>
+                                    </div>
+                                    <div class="card-action">
+                                        <button type="button" class="btn btn-danger" onclick="window.history.back()">
+                                            <i class="fa fa-arrow-left"></i> Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-success float-end" id="saveButton">
+                                            Update <i class="fa fa-save"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -408,6 +475,10 @@
     <script src="{!! asset('plugins/select2/js/select2.full.min.js')!!}"></script>
     <script src="{!! asset('supporting/bootstrap-fileinput/bootstrap-fileinput.js') !!}" type="text/javascript"></script>
     <script>
+        $(function () {
+            $('.select2').select2();
+        });
+
         $(document).ready(function() {
             $('.fileinput').fileinput(); // ensure initialization
         });

@@ -9,14 +9,14 @@
     <style>
         /* Force row height */
         /* #basic-datatables tbody tr {
-                height: 30px !important;
-                line-height: 1.7 !important;
-            }
+                    height: 30px !important;
+                    line-height: 1.7 !important;
+                }
 
-            #basic-datatables tbody td {
-                padding: 2px 8px !important;
-                vertical-align: middle !important;
-            } */
+                #basic-datatables tbody td {
+                    padding: 2px 8px !important;
+                    vertical-align: middle !important;
+                } */
 
         /* Header styling - Updated to light green */
         #basic-datatables thead tr {
@@ -88,10 +88,15 @@
                                             {{ isset($user->user_type) ? $user->user_type->title : '' }}
                                         </span>
                                     </td>
-                                    <td>{{ $user->status }}</td>
                                     <td>
-                                        <a title="Edit" class="bg-success p-1"
-                                            href="{{ url('user/' . $user->id) }}"><i
+                                        @if ($user->web_access == 1)
+                                            Active
+                                        @else
+                                            Inactive
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a title="Edit" class="bg-success p-1" href="{{ url('user/' . $user->id) }}"><i
                                                 class="fa fa-eye text-white"></i></a>
                                         <a title="Edit" class="bg-primary p-1"
                                             href="{{ url('user/' . $user->id . '/edit') }}"><i

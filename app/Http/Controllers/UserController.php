@@ -118,6 +118,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::with(['profile', 'user_type'])->findOrFail($id);
-        return view('users.edit', compact('user'));
+        $userTypes = UserType::where('status', 'Active')->get();
+        return view('users.edit', compact('user', 'userTypes'));
     }
 }
