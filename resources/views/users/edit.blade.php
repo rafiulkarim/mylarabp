@@ -129,7 +129,16 @@
             <div class="card card-round">
                 <div class="card-body">
                     <div class="text-center">
-                        <img class="rounded-circle" src="{{ asset('assets/img/profile.jpg') }}" alt="profile">
+                        @if ($user->imageprofile->image != 'default_image.png')
+                            <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                src="{{ asset('storage/images/' . $user->imageprofile->image) }}" alt="profile">
+                        @elseif($user->profile->gender == "Male")
+                            <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                src="{{ asset('storage/images/default_image_male.png') }}" alt="profile">
+                        @elseif($user->profile->gender == "Female")
+                            <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                src="{{ asset('storage/images/default_image_female.png') }}" alt="profile">
+                        @endif
                         <h5 class="mt-2">{{ $user->name }}</h5>
                         <h6 class="badge badge-success">{{ isset($user->user_type) ? $user->user_type->title : '' }}</h6>
                     </div>
@@ -207,7 +216,7 @@
                                     <div class="col-md-7">
                                         <div class="input-group">
                                             <input type="text" name="cell_phone" id="cell_phone" class="form-control form-control-sm"
-                                                value="{{ $user->cell_phone }}" placeholder="Enter Phone Number" >
+                                                value="{{ $user->cell_phone }}" placeholder="Enter Phone Number">
                                         </div>
                                         <small id="cell_phoneError" class="form-text text-danger"></small>
                                     </div>
@@ -327,7 +336,58 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="roleAndAccess" role="tabpanel" aria-labelledby="line-profile-tab">
-
+                            <div class="card-body">
+                                <form action="{{ url('profile_image') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" value="{{ $user->id }}" name="profile_image_id">
+                                        <div class="form-group">
+                                            <h3>Profile Picture</h3>
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new thumbnail"
+                                                     style="width: 200px; height: 150px;">
+                                                    @if ($user->imageprofile->image != 'default_image.png')
+                                                        <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                                            src="{{ asset('storage/images/' . $user->imageprofile->image) }}" alt="profile">
+                                                    @elseif($user->profile->gender == "Male")
+                                                        <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                                            src="{{ asset('storage/images/default_image_male.png') }}" alt="profile">
+                                                    @elseif($user->profile->gender == "Female")
+                                                        <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                                            src="{{ asset('storage/images/default_image_female.png') }}" alt="profile">
+                                                    @endif
+                                                </div>
+                                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                                     style="max-width: 200px; max-height: 200px;"></div>
+                                                <div>
+                                                <span class="btn btn-default btn-file">
+                                                    <span class="fileinput-new"> Select Avatar </span>
+                                                    <span class="fileinput-exists"> Change </span>
+                                                    <input type="file" name="profile_image" accept="image/*">
+                                                </span>
+                                                    <a href="javascript:;" class="btn btn-default fileinput-exists"
+                                                       data-dismiss="fileinput"> Remove </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="callout callout-warning">
+                                                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+                                                <p>
+                                                    <span style="font-size: 12px"> Prefered image size for Avatar is 300X300 & not more then 1MB. Supported image type should be jpeg, jpj, png and bmp. Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                <div class="card-action">
+                                    <button type="button" class="btn btn-danger" onclick="window.history.back()">
+                                        <i class="fa fa-arrow-left"></i> Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-success float-end" id="saveButton">
+                                        Update <i class="fa fa-save"></i>
+                                    </button>
+                                </div>
+                                    </div>
+                                </form>
                         </div>
                         <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="line-profile-tab">
 
@@ -346,7 +406,13 @@
     <script src="{!! asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')!!}"></script>
 
     <script src="{!! asset('plugins/select2/js/select2.full.min.js')!!}"></script>
-    <script src={!! asset('supporting/bootstrap-fileinput/bootstrap-fileinput.js')!!} type="text/javascript"></script>
+    <script src="{!! asset('supporting/bootstrap-fileinput/bootstrap-fileinput.js') !!}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+            $('.fileinput').fileinput(); // ensure initialization
+        });
+    </script>
+
 
     <script>
         $(function () {

@@ -32,7 +32,16 @@
             <div class="card card-round">
                 <div class="card-body">
                     <div class="text-center">
-                        <img class="rounded-circle" src="{{ asset('assets/img/profile.jpg') }}" alt="profile">
+                        @if ($user->imageprofile->image != 'default_image.png')
+                            <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                src="{{ asset('storage/images/' . $user->imageprofile->image) }}" alt="profile">
+                        @elseif($user->profile->gender == "Male")
+                            <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                src="{{ asset('storage/images/default_image_male.png') }}" alt="profile">
+                        @elseif($user->profile->gender == "Female")
+                            <img class="rounded-circle img-fluid avatar-img" style="width: 150px; height: 150px;"
+                                src="{{ asset('storage/images/default_image_female.png') }}" alt="profile">
+                        @endif
                         <h5 class="mt-2">{{ $user->name }}</h5>
                         <h6 class="badge badge-success">{{ isset($user->user_type) ? $user->user_type->title : '' }}</h6>
                     </div>
