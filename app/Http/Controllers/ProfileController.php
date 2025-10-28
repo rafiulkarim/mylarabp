@@ -85,7 +85,7 @@ class ProfileController extends Controller
         }
         $user->user_type_id = $request->user_type;
         $user->password = $password;
-        $user->web_access = $request->web_access;
+        $user->web_access = $request->web_access ?? $user->web_access;
         $user->save();
 
         \Session::flash('flash_message', 'Profile Settings Successfully Updated');

@@ -398,7 +398,7 @@
                                         <label for="password" style="text-align: right" class="col-md-3 required-field"><strong>Passwrod</strong> :</label>
                                         <div class="col-md-7">
                                             <div class="input-group">
-                                                <input type="password" name="password" id="password" class="form-control form-control-sm"
+                                                <input type="password" name="password" required id="password" class="form-control form-control-sm"
                                                     placeholder="Enter Passwrod" >
                                             </div>
                                             <small id="passwordError" class="form-text text-danger"></small>
@@ -408,7 +408,7 @@
                                         <label for="confirm_password" style="text-align: right" class="col-md-3 required-field"><strong>Confirm Passwrod</strong> :</label>
                                         <div class="col-md-7">
                                             <div class="input-group">
-                                                <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-sm"
+                                                <input type="password" name="confirm_password" required id="confirm_password" class="form-control form-control-sm"
                                                     placeholder="Enter Confirm Passwrod" >
                                             </div>
                                             <small id="confirm_password_error" class="form-text text-danger"></small>
