@@ -15,14 +15,14 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            ['title' => 'role-access'],
             ['title' => 'user-access'],
             ['title' => 'user-create'],
             ['title' => 'user-edit'],
             ['title' => 'user-show'],
             ['title' => 'user-delete'],
             ['title' => 'role-access'],
-            ['title' => 'role-delete'],
+            ['title' => 'user-type-access'],
+            ['title' => 'permission-access'],
         ];
         \App\Models\Permission::insert($permissions);
 

@@ -63,30 +63,32 @@
                 @endcan
 
                 <!-- Permission -->
-                <li class="nav-item {{ Request::is('permission*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#permission"
-                        class="{{ Request::is('permission*') ? '' : 'collapsed' }}"
-                        aria-expanded="{{ Request::is('permission*') ? 'true' : 'false' }}">
-                        <i class="fas fa-lock"></i>
-                        <p>Permission</p>
-                        <span class="caret {{ Request::is('permission*') ? 'caret-down' : 'caret-right' }}"></span>
-                    </a>
-                    <div class="collapse {{ Request::is('permission*') ? 'show' : '' }}" id="permission">
-                        <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
-                            <li class="{{ Request::is('permission/create') ? 'active' : '' }}">
-                                <a href="{{ url('permission/create') }}">
-                                    <span class="sub-item">Create Permission</span>
-                                </a>
-                            </li>
-                            <li
-                                class="{{ Request::is('permission') || Request::is('permission/*/edit') ? 'active' : '' }}">
-                                <a href="{{ url('permission') }}">
-                                    <span class="sub-item">Manage Permission</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @if (Auth::user()->email == 'superadmin@gmail.com')
+                    <li class="nav-item {{ Request::is('permission*') ? 'active' : '' }}">
+                        <a data-bs-toggle="collapse" href="#permission"
+                            class="{{ Request::is('permission*') ? '' : 'collapsed' }}"
+                            aria-expanded="{{ Request::is('permission*') ? 'true' : 'false' }}">
+                            <i class="fas fa-lock"></i>
+                            <p>Permission</p>
+                            <span class="caret {{ Request::is('permission*') ? 'caret-down' : 'caret-right' }}"></span>
+                        </a>
+                        <div class="collapse {{ Request::is('permission*') ? 'show' : '' }}" id="permission">
+                            <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                                <li class="{{ Request::is('permission/create') ? 'active' : '' }}">
+                                    <a href="{{ url('permission/create') }}">
+                                        <span class="sub-item">Create Permission</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="{{ Request::is('permission') || Request::is('permission/*/edit') ? 'active' : '' }}">
+                                    <a href="{{ url('permission') }}">
+                                        <span class="sub-item">Manage Permission</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
 
                 <!-- Role -->
                 @can('role-access')
@@ -115,30 +117,32 @@
                 @endcan
 
                 <!-- User Type -->
-                <li class="nav-item {{ Request::is('user-type*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#uTypes"
-                        class="{{ Request::is('user-type*') ? '' : 'collapsed' }}"
-                        aria-expanded="{{ Request::is('user-type*') ? 'true' : 'false' }}">
-                        <i class="fas fa-user-cog"></i>
-                        <p>User Type</p>
-                        <span class="caret {{ Request::is('user-type*') ? 'caret-down' : 'caret-right' }}"></span>
-                    </a>
-                    <div class="collapse {{ Request::is('user-type*') ? 'show' : '' }}" id="uTypes">
-                        <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
-                            <li class="{{ Request::is('user-type/create') ? 'active' : '' }}">
-                                <a href="{{ url('user-type/create') }}">
-                                    <span class="sub-item">Create User Type</span>
-                                </a>
-                            </li>
-                            <li
-                                class="{{ Request::is('user-type') || Request::is('user-type/*/edit') ? 'active' : '' }}">
-                                <a href="{{ url('user-type') }}">
-                                    <span class="sub-item">Manage User Type</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @can('user-type-access')
+                    <li class="nav-item {{ Request::is('user-type*') ? 'active' : '' }}">
+                        <a data-bs-toggle="collapse" href="#uTypes"
+                            class="{{ Request::is('user-type*') ? '' : 'collapsed' }}"
+                            aria-expanded="{{ Request::is('user-type*') ? 'true' : 'false' }}">
+                            <i class="fas fa-user-cog"></i>
+                            <p>User Type</p>
+                            <span class="caret {{ Request::is('user-type*') ? 'caret-down' : 'caret-right' }}"></span>
+                        </a>
+                        <div class="collapse {{ Request::is('user-type*') ? 'show' : '' }}" id="uTypes">
+                            <ul class="nav nav-collapse" style="padding-left: 20px; line-height: 1">
+                                <li class="{{ Request::is('user-type/create') ? 'active' : '' }}">
+                                    <a href="{{ url('user-type/create') }}">
+                                        <span class="sub-item">Create User Type</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="{{ Request::is('user-type') || Request::is('user-type/*/edit') ? 'active' : '' }}">
+                                    <a href="{{ url('user-type') }}">
+                                        <span class="sub-item">Manage User Type</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
             </ul>
         </div>
     </div>

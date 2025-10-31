@@ -17,7 +17,6 @@ class ProfileController extends Controller
 
     public function update_profile(Request $request)
     {
-
         $profile_data = Profile::find($request->profile_id);
         $profile_data->gender = $request->gender;
         $profile_data->nid = $request->nid;
@@ -33,7 +32,7 @@ class ProfileController extends Controller
         $user->cell_phone = $request->cell_phone;
         $user->save();
 
-        \Session::flash('flash_message', 'Successfully Updated');
+        \Session::flash('success', 'Successfully Updated');
         return redirect('user/' . $user->id);
     }
 
@@ -70,7 +69,7 @@ class ProfileController extends Controller
             ->where('user_id', $request->profile_image_id)
             ->update(['image' => $filename]);
 
-        \Session::flash('flash_message', 'Profile Image Successfully Updated');
+        \Session::flash('success', 'Profile Image Successfully Updated');
         return redirect('user/' . $request->profile_image_id);
     }
 
@@ -88,7 +87,7 @@ class ProfileController extends Controller
         $user->web_access = $request->web_access ?? $user->web_access;
         $user->save();
 
-        \Session::flash('flash_message', 'Profile Settings Successfully Updated');
+        \Session::flash('success', 'Profile Settings Successfully Updated');
         return redirect('user/' . $request->user_id);
     }
 }

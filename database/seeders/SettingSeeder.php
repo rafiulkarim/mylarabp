@@ -18,7 +18,7 @@ class SettingSeeder extends Seeder
             [
                 'id' => '1',
                 'name' => 'SuperAdmin',
-                'email' => 'superadmin@eidyict.com',
+                'email' => 'superadmin@gmail.com',
                 'password' => bcrypt('123456'),
                 'user_type_id' => 1,
                 'web_access' => '1',
@@ -26,7 +26,7 @@ class SettingSeeder extends Seeder
             [
                 'id' => '2',
                 'name' => 'SystemAdmin',
-                'email' => 'systemadmin@eidyict.com',
+                'email' => 'systemadmin@gmail.com',
                 'password' => bcrypt('123456'),
                 'user_type_id' => 1,
                 'web_access' => '1',
@@ -34,7 +34,7 @@ class SettingSeeder extends Seeder
             [
                 'id' => '3',
                 'name' => 'User',
-                'email' => 'user@eidyict.com',
+                'email' => 'user@gmail.com',
                 'password' => bcrypt('123456'),
                 'user_type_id' => 2,
                 'web_access' => '1',

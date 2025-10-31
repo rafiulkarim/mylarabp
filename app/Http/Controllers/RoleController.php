@@ -25,12 +25,14 @@ class RoleController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('role-access'), redirect('error'));
         $permissions = Permission::where('status', 'Active')->get();
         return view('role.create', compact(['permissions']));
     }
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('role-access'), redirect('error'));
         $role = Role::create($request->all());
 
         // Ensure permissions is an array and convert to integers
@@ -53,6 +55,7 @@ class RoleController extends Controller
 
     public function edit($id)
     {
+        abort_if(Gate::denies('role-access'), redirect('error'));
         $role = Role::find($id);
         $permissions = Permission::where('status', 'Active')->get();
         $permissionData = DB::table('permission_role')
@@ -65,6 +68,7 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
+        abort_if(Gate::denies('role-access'), redirect('error'));
         // print_r($request->all()); die();
         $role = Role::find($request->id);
         $role->title = $request->title;
@@ -91,6 +95,7 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
+        abort_if(Gate::denies('role-access'), redirect('error'));
         $role = Role::find($id);
         $role->delete();
     }

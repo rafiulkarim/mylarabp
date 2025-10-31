@@ -314,10 +314,14 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (res) {
-                            if (res.success) {
+                            // Handle both response formats for compatibility
+                            var success = res.success === true || res.success === 1;
+                            var message = res.message || 'Operation completed';
+
+                            if (success) {
                                 swal({
                                     title: "Success!",
-                                    text: res.message,
+                                    text: message,
                                     icon: "success",
                                     buttons: false,
                                     timer: 3000
@@ -330,7 +334,7 @@
                                     .html('Submit <i class="fa fa-save"></i>');
                                 swal({
                                     title: "Error!",
-                                    text: res.message || "Something went wrong!",
+                                    text: message || "Something went wrong!",
                                     icon: "error",
                                 });
                             }
@@ -341,11 +345,31 @@
 
                             if (xhr.status === 422) {
                                 var errors = xhr.responseJSON.errors;
+
+                                // Map backend error keys to frontend element IDs
+                                var errorMapping = {
+                                    'name': 'nameError',
+                                    'email': 'emailError',
+                                    'cell_phone': 'cell_phoneError',
+                                    'password': 'passwordError',
+                                    'user_type': 'userTypeError',
+                                    'gender': 'genderError',
+                                    'web_access': 'webAccessError'
+                                };
+
                                 $.each(errors, function (key, value) {
-                                    var errorElement = $('#' + key + 'Error');
-                                    if (errorElement.length) {
-                                        errorElement.text(value[0]);
+                                    var elementId = errorMapping[key];
+                                    if (elementId) {
+                                        $('#' + elementId).text(value[0]);
                                     }
+                                });
+
+                                // Show a general error toast
+                                swal({
+                                    title: "Validation Error!",
+                                    text: "Please check the form and correct the errors.",
+                                    icon: "error",
+                                    timer: 3000
                                 });
                             } else {
                                 swal({
@@ -404,5 +428,6 @@
                 }
             });
         });
+    
     </script>
 @endpush

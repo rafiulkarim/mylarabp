@@ -133,6 +133,60 @@
     {{--
     <script src="{{ asset('assets/js/demo.js') }}"></script>--}}
 
+    <script>
+        // Check for errors and show SweetAlert
+        document.addEventListener('DOMContentLoaded', function () {
+            @if($errors->any())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: '{{ $errors->first() }}',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    toast: true,
+                    background: 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))',
+                    color: 'white',
+                    customClass: {
+                        popup: 'sweetalert-popup'
+                    }
+                });
+            @endif
+
+            @if(session('status'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ session('status') }}',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    toast: true,
+                    background: 'linear-gradient(135deg, #198754, #20c997)',
+                    color: 'white'
+                });
+            @endif
+
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ session('success') }}',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    toast: true,
+                    background: 'linear-gradient(135deg, #198754, #20c997)',
+                    color: 'white'
+                });
+            @endif
+        });
+
+    </script>
+
     @stack('js')
 
 </body>

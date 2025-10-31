@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class UserTypeController extends Controller
 {
@@ -16,18 +17,21 @@ class UserTypeController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('user-type-access'), redirect('error'));
         $userTypes = UserType::with(['user_type_role'])->get();
         return view('user_type.index', compact(['userTypes']));
     }
 
     public function create()
     {
+        abort_if(Gate::denies('user-type-access'), redirect('error'));
         $roles = Role::where('status', 'Active')->get();
         return view('user_type.create', compact(['roles']));
     }
 
     public function store(Request $request)
     {
+        abort_if(Gate::denies('user-type-access'), redirect('error'));
         $user_type = UserType::create($request->all());
         $user_type->user_type_role()->attach($request->roles);
 
@@ -39,6 +43,7 @@ class UserTypeController extends Controller
 
     public function edit($id)
     {
+        abort_if(Gate::denies('user-type-access'), redirect('error'));
         $userType = UserType::find($id);
         $roles = Role::where('status', 'Active')->get();
         $roleData = DB::table('role_user_type')
@@ -50,6 +55,7 @@ class UserTypeController extends Controller
 
     public function update(Request $request)
     {
+        abort_if(Gate::denies('user-type-access'), redirect('error'));
         $userType = UserType::find($request->id);
         $userType->title = $request->title;
         $userType->status = $request->status;
@@ -64,6 +70,7 @@ class UserTypeController extends Controller
 
     public function destroy($id)
     {
+        abort_if(Gate::denies('user-type-access'), redirect('error'));
         $userType = UserType::find($id);
         $userType->delete();
 

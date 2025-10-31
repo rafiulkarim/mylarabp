@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -20,12 +21,14 @@ class UserController extends Controller
 
     public function index()
     {
+        abort_if(Gate::denies('user-access'), redirect('error'));
         $users = User::with('user_type')->where('id', '!=', Auth::id())->get();
         return view('users.index', compact(['users']));
     }
 
     public function create()
     {
+        abort_if(Gate::denies('user-create'), redirect('error'));
         $userTypes = UserType::where('status', 'Active')->get();
         return view('users.create', compact(['userTypes']));
     }
@@ -33,6 +36,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // Validation rules
+        abort_if(Gate::denies('user-create'), redirect('error'));
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
             'cell_phone' => 'required_without:email|nullable|digits:11|regex:/(01)[0-9]{9}/|unique:users',
@@ -83,11 +87,12 @@ class UserController extends Controller
 
             // Commit transaction
             DB::commit();
+            
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User created successfully'
-            ]);
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'User created successfully'
+            // ]);
 
         } catch (\Exception $e) {
             // Rollback transaction on error
@@ -105,6 +110,7 @@ class UserController extends Controller
 
     public function show($id)
     {
+        abort_if(Gate::denies('user-show'), redirect('error'));
         $user = User::with(['profile', 'user_type', 'roles.permissions'])->findOrFail($id);
         return view('users.show', compact('user'));
     }
@@ -117,6 +123,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        abort_if(Gate::denies('user-edit'), redirect('error'));
         $user = User::with(['profile', 'user_type'])->findOrFail($id);
         $userTypes = UserType::where('status', 'Active')->get();
         return view('users.edit', compact('user', 'userTypes'));
